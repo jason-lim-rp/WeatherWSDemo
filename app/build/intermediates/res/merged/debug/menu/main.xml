@@ -1,9 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="sg.edu.rp.lab16_database.MainActivity" >
-
-    <item
-        android:id="@+id/cmDelete"
-        android:title="@string/cmDelete"/>
-
-</menu>
