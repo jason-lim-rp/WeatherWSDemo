@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 public class CityWeatherAdapter extends ArrayAdapter<Weather>{
 	
 	private Context context;
@@ -25,20 +27,33 @@ public class CityWeatherAdapter extends ArrayAdapter<Weather>{
 
 	@Override
 	public View getView(int position, View arg1, ViewGroup arg2) {
-		Weather entry = weatherList.get(position);
-		
+
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View v = (View) inflater.inflate(res, null);
-		
-		TextView tvheader = (TextView)v.findViewById(R.id.tvrowheader);
-		tvheader.setText(entry.getCity());
-		 
-		   
-	    TextView tvcontent = (TextView) v.findViewById(R.id.tvrowcontent);
-	    tvcontent.setText(entry.getCondition()+"\nTemperature : "+entry.getTemp());
-	       
-	    ImageView ivicon = (ImageView) v.findViewById(R.id.imageView1);
-	    ivicon.setImageDrawable(entry.getIcon());
+
+        Weather entry = weatherList.get(position);
+
+        TextView tvheader = (TextView)v.findViewById(R.id.tvrowheader);
+        TextView tvcontent = (TextView) v.findViewById(R.id.tvrowcontent);
+        ImageView ivicon = (ImageView) v.findViewById(R.id.imageView1);
+
+        tvheader.setText(entry.getCity());
+
+        switch (entry.getCondition()){
+            case "PC": entry.setCondition("Partly Cloudy");
+                    break;
+            case "TL": entry.setCondition("Thundery Showers");
+                    break;
+			case "LS": entry.setCondition("Light Showers");
+					break;
+        }
+
+	    tvcontent.setText(entry.getCondition()+"\nTemperature : Not Available");
+	    if (entry.getImgurl().isEmpty()){
+            Picasso.get().load(R.drawable.na).into(ivicon);
+        } else {
+            Picasso.get().load(entry.getImgurl()).into(ivicon);
+        }
 
 		return v;
 	}
